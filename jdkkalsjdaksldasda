@@ -1,0 +1,41 @@
+[33mcommit 59c5cd22d7a46471ee5af42938d64d0d788c0fdf[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/models[m[33m)[m
+Author: Nicolle07M <128643495+Nicolle07M@users.noreply.github.com>
+Date:   Sat Oct 28 16:16:34 2023 -0500
+
+    feat(back-end): add Post in SuppliersController
+
+[33mcommit 3cd043c8c077da5122ca385d06c6bca997d51e82[m
+Author: Nicolle07M <128643495+Nicolle07M@users.noreply.github.com>
+Date:   Sat Oct 28 15:44:52 2023 -0500
+
+    feat(back-end): add Get by Id in SuppliersController
+
+[33mcommit 3df7c431020d0a2ffc05af048c2919cb441a66d6[m[33m ([m[1;31morigin/feature/models[m[33m)[m
+Author: Nicolle07M <128643495+Nicolle07M@users.noreply.github.com>
+Date:   Sat Oct 28 15:05:23 2023 -0500
+
+    feat(back-end): add file suppliercontroller with GET
+
+[33mcommit b70595e6819fb1683810b46a3f1514914ede0778[m
+Author: nicolle07M <marqueznicolle421@gmail.com>
+Date:   Wed Oct 25 16:41:35 2023 -0500
+
+    Desarrollo 25 de octubre Migration Full
+
+[33mcommit df41a790686d683e41af6b2a21239f833ae21699[m
+Author: nicolle07M <marqueznicolle421@gmail.com>
+Date:   Wed Oct 25 15:57:35 2023 -0500
+
+    feat(conf): add connection string and packages Entity Framework
+
+[33mcommit 27c7d3a35664b202e36116c5316a77046fda40fb[m
+Author: nicolle07M <marqueznicolle421@gmail.com>
+Date:   Wed Oct 25 15:32:12 2023 -0500
+
+    conf(git) add gitignore and gitattributes
+
+[33mcommit 2bfd8cf18cd2b20552bcd508ed72be539270ef7a[m
+Author: Nicolle07M <128643495+Nicolle07M@users.noreply.github.com>
+Date:   Wed Oct 25 15:03:09 2023 -0500
+
+    Initial commit
