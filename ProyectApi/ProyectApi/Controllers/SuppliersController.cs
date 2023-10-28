@@ -33,10 +33,25 @@ namespace ProyectApi.Controllers
         }
 
         // GET api/<SuppliersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}")] // Variables de ruta  https://localhost:7030/api/suppliers/5 
+        public async Task<ActionResult<Supplier>> Get(int id)
         {
-            return "value";
+
+            if (_context.Suppliers == null
+)
+            {
+                return NotFound();
+            }
+
+            var supplier = await _context.Suppliers.FindAsync(id);
+
+            if (supplier is null)
+            {
+                return NotFound();
+            }
+
+
+            return supplier;
         }
 
         // POST api/<SuppliersController>
