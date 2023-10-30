@@ -28,7 +28,7 @@ namespace ProyectApi.Controllers
                 return NotFound();
             }
 
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include(io=>io.OrderItems).ToListAsync();
 
         }
 
@@ -45,16 +45,18 @@ namespace ProyectApi.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
+            //var order = await _context.Orders.FindAsync(id);
+
+            var order = await _context.Orders.Include(oi=> oi.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
 
             if (order is null)
             {
                 return NotFound();
             }
-
-
             return order;
         }
+
+
 
         // POST api/<OrdersController>
         [HttpPost]
@@ -64,10 +66,15 @@ namespace ProyectApi.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
             }
+
+            //Calcular el total de la orden de Compra 
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("Get", new { id = order.Id }, order);
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
+
+
 
         // PUT api/<OrdersController>/5
         [HttpPut("{id}")]

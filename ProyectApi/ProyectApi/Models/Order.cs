@@ -17,7 +17,7 @@ namespace ApiRestBilling.Models
         public decimal TotalAmount { get; set; } = 0;
 
         [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
     }
