@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectApi.Data;
+using ProyectApi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +13,7 @@ namespace ProyectApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPurchaseOrdersService _purchaseOrdersService;
 
         public OrdersController(ApplicationDbContext context)
         {
@@ -60,25 +62,34 @@ namespace ProyectApi.Controllers
 
         // POST api/<OrdersController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order order)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             if (_context.Orders == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Orders' is null.");
             }
 
-            //Calcular el total de la orden de Compra 
+            //recorremos cada detalle de la orden de compra 
+            foreach (var detalle in order.OrderItems)
+            {
+                //Asignar el precio unitario del producto al detalle 
+                detalle.UnitPrice = await _purchaseOrdersService.CheckUnitPrice(detalle);
+
+                // Calcular el subtotal 
+                detalle.Subtotal = await _purchaseOrdersService.CalculateSubtotalOrderItem(detalle);
+            }
+            //Asignar el total calculado a la orden de compra (si tienes una propiedad explicita para el total de tu modelo)
+            order.TotalAmount = _purchaseOrdersService.CalculateTotalOrderItems((List<OrderItem >) order.OrderItems);
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
-
-
         // PUT api/<OrdersController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Order order)
+        public async Task<IActionResult> PutOrder(int id, Order order)
         {
 
             if (id != order.Id)
@@ -86,6 +97,7 @@ namespace ProyectApi.Controllers
                 return BadRequest();
             }
             _context.Entry(order).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -99,7 +111,7 @@ namespace ProyectApi.Controllers
                 }
                 else
                 {
-                    return BadRequest();
+                    throw;
                 }
             }
             return NoContent();
