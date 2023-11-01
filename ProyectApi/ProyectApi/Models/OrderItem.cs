@@ -11,8 +11,8 @@ namespace ApiRestBilling.Models
         public int OrderId { get; set; }
         [Required]
         public int ProductId { get; set; }
-        [Required]
-        public decimal UnitPrice { get; set; } = 0;
+       // [Required]
+        public decimal? UnitPrice { get; set; } = 0;
         [Required]
         public int Quantity { get; set; } = 1;
         [ForeignKey("OrderId")]

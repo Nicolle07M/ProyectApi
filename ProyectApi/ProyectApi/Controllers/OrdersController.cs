@@ -13,12 +13,13 @@ namespace ProyectApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IPurchaseOrdersService _purchaseOrdersService;
+        private readonly IPurchaseOrdersService _purchaseOrdersService;                     
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, IPurchaseOrdersService purchaseOrdersService)
         {
 
             this._context = context;
+            this._purchaseOrdersService = purchaseOrdersService;
         }
 
         // GET: api/<OrdersController>
@@ -79,12 +80,12 @@ namespace ProyectApi.Controllers
                 detalle.Subtotal = await _purchaseOrdersService.CalculateSubtotalOrderItem(detalle);
             }
             //Asignar el total calculado a la orden de compra (si tienes una propiedad explicita para el total de tu modelo)
-            order.TotalAmount = _purchaseOrdersService.CalculateTotalOrderItems((List<OrderItem >) order.OrderItems);
+            order.TotalAmount = _purchaseOrdersService.CalculateTotalOrderItems((List<OrderItem>) order.OrderItems);
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("Get", new { id = order.Id }, order);
         }
 
         // PUT api/<OrdersController>/5
