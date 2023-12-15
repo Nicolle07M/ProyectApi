@@ -1,5 +1,6 @@
-﻿using ApiRestBilling.Models;
-using ProyectApi.Data;
+﻿using ApiRestBilling.Data;
+using ApiRestBilling.Models;
+
 
 namespace ProyectApi.Services
 {
